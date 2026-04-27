@@ -1,428 +1,296 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Registro de Sedes - Campamento Aprender es Divertido</title>
+<meta charset="UTF-8">
+<title>Registro de Sedes - Campamento Aprender es Divertido</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f9;
-      margin: 0;
-      padding: 20px;
-      color: #222;
-    }
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f9;
+  margin: 0;
+  padding: 20px;
+  color: #222;
+}
 
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      background: #fff;
-      padding: 25px;
-      border-radius: 10px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.12);
-    }
+.logo-campamento {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  width: 130px;
+  background: white;
+  padding: 6px;
+  border-radius: 8px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
 
-    h1, h2, h3 {
-      text-align: center;
-    }
+.container {
+  max-width: 1000px;
+  margin: auto;
+  background: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.12);
+}
 
-    .subtitulo {
-      text-align: center;
-      color: #555;
-      margin-bottom: 25px;
-    }
+h1, h2, h3 {
+  text-align: center;
+}
 
-    .seccion {
-      border: 1px solid #ddd;
-      padding: 18px;
-      margin-top: 20px;
-      border-radius: 8px;
-      background: #fafafa;
-    }
+.subtitulo {
+  text-align: center;
+  color: #555;
+  margin-bottom: 25px;
+}
 
-    label {
-      display: block;
-      margin-top: 12px;
-      font-weight: bold;
-    }
+.seccion {
+  border: 1px solid #ddd;
+  padding: 18px;
+  margin-top: 20px;
+  border-radius: 8px;
+  background: #fafafa;
+}
 
-    input, select, textarea {
-      width: 100%;
-      padding: 9px;
-      margin-top: 5px;
-      box-sizing: border-box;
-      border: 1px solid #bbb;
-      border-radius: 4px;
-      font-size: 14px;
-    }
+label {
+  display: block;
+  margin-top: 12px;
+  font-weight: bold;
+}
 
-    textarea {
-      resize: vertical;
-    }
+input, select, textarea {
+  width: 100%;
+  padding: 9px;
+  margin-top: 5px;
+  box-sizing: border-box;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  font-size: 14px;
+}
 
-    .facilitador {
-      border: 1px solid #ccc;
-      background: white;
-      padding: 12px;
-      margin-top: 12px;
-      border-radius: 6px;
-    }
+textarea {
+  resize: vertical;
+}
 
-    button {
-      margin-top: 15px;
-      padding: 10px 14px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 14px;
-    }
+.facilitador {
+  border: 1px solid #ccc;
+  background: white;
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 6px;
+}
 
-    .btn-agregar {
-      background: #0066cc;
-      color: white;
-    }
+button {
+  margin-top: 15px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
 
-    .btn-eliminar {
-      background: #cc0000;
-      color: white;
-    }
+.btn-agregar {
+  background: #0066cc;
+  color: white;
+}
 
-    .btn-secundaria {
-      background: #6c757d;
-      color: white;
-    }
+.btn-eliminar {
+  background: #cc0000;
+  color: white;
+}
 
-    .btn-enviar {
-      background: #198754;
-      color: white;
-      width: 100%;
-      font-size: 17px;
-      padding: 13px;
-    }
+.btn-secundaria {
+  background: #6c757d;
+  color: white;
+}
 
-    .btn-enviar:disabled {
-      background: #999;
-      cursor: not-allowed;
-    }
+.btn-enviar {
+  background: #198754;
+  color: white;
+  width: 100%;
+  font-size: 17px;
+  padding: 13px;
+}
 
-    .oculto {
-      display: none;
-    }
+.btn-enviar:disabled {
+  background: #999;
+  cursor: not-allowed;
+}
 
-    .mensaje {
-      margin-top: 18px;
-      padding: 12px;
-      border-radius: 6px;
-      display: none;
-      font-weight: bold;
-    }
+.oculto {
+  display: none;
+}
 
-    .mensaje.ok {
-      display: block;
-      background: #d1e7dd;
-      color: #0f5132;
-      border: 1px solid #badbcc;
-    }
+.mensaje {
+  margin-top: 18px;
+  padding: 12px;
+  border-radius: 6px;
+  display: none;
+  font-weight: bold;
+}
 
-    .mensaje.error {
-      display: block;
-      background: #f8d7da;
-      color: #842029;
-      border: 1px solid #f5c2c7;
-    }
-  </style>
+.mensaje.ok {
+  display: block;
+  background: #d1e7dd;
+  color: #0f5132;
+  border: 1px solid #badbcc;
+}
+
+.mensaje.error {
+  display: block;
+  background: #f8d7da;
+  color: #842029;
+  border: 1px solid #f5c2c7;
+}
+</style>
 </head>
 
 <body>
 
+<img src="logo.png" class="logo-campamento" alt="Logo Campamento">
+
 <div class="container">
 
-  <h1>Campamento Aprender es Divertido</h1>
-  <h2>Registro de sedes, coordinadores y facilitadores</h2>
-  <p class="subtitulo">Formulario para el registro oficial por distrito educativo</p>
+<h1>Campamento Aprender es Divertido</h1>
+<h2>Registro de sedes, coordinadores y facilitadores</h2>
+<p class="subtitulo">Formulario oficial para el registro por distrito educativo</p>
 
-  <form id="formulario">
+<form id="formulario">
 
-    <div class="seccion">
-      <h3>Datos generales</h3>
+<div class="seccion">
+  <h3>Datos generales</h3>
 
-      <label>Regional</label>
-      <select id="regional" required>
-        <option value="">Seleccione una regional</option>
-      </select>
+  <label>Regional</label>
+  <select id="regional" required>
+    <option value="">Seleccione una regional</option>
+  </select>
 
-      <label>Distrito Educativo</label>
-      <select id="distrito" required disabled>
-        <option value="">Seleccione primero una regional</option>
-      </select>
+  <label>Distrito Educativo</label>
+  <select id="distrito" required disabled>
+    <option value="">Seleccione primero una regional</option>
+  </select>
 
-      <label>Nombre de quien completa el formulario</label>
-      <input type="text" id="responsable" required>
+  <label>Nombre de quien completa el formulario</label>
+  <input type="text" id="responsable" required>
 
-      <label>Teléfono de contacto</label>
-      <input type="tel" id="telefono" required>
+  <label>Teléfono de contacto</label>
+  <input type="tel" id="telefono" required>
 
-      <label>Correo electrónico</label>
-      <input type="email" id="correo" required>
-    </div>
+  <label>Correo electrónico</label>
+  <input type="email" id="correo" required>
+</div>
 
-    <div class="seccion">
-      <h3>Sede principal</h3>
+<div class="seccion">
+  <h3>Sede principal</h3>
 
-      <label>Nombre del centro sede</label>
-      <input type="text" id="sede1Centro" required>
+  <label>Nombre del centro sede</label>
+  <input type="text" id="sede1Centro" required>
 
-      <label>Cantidad estimada de estudiantes</label>
-      <input type="number" id="sede1Estudiantes" min="1" required>
+  <label>Cantidad estimada de estudiantes</label>
+  <input type="number" id="sede1Estudiantes" min="1" required>
 
-      <label>Cantidad estimada de grupos</label>
-      <input type="number" id="sede1Grupos" min="1" max="6" required>
+  <label>Cantidad estimada de grupos</label>
+  <input type="number" id="sede1Grupos" min="1" max="6" required>
 
-      <h3>Coordinador de sede principal</h3>
+  <h3>Coordinador de la sede principal</h3>
 
-      <label>Nombre del coordinador</label>
-      <input type="text" id="sede1CoordNombre" required>
+  <label>Nombre del coordinador</label>
+  <input type="text" id="sede1CoordNombre" required>
 
-      <label>Cédula del coordinador</label>
-      <input type="text" id="sede1CoordCedula" required placeholder="000-0000000-0">
+  <label>Cédula del coordinador</label>
+  <input type="text" id="sede1CoordCedula" required placeholder="000-0000000-0">
 
-      <label>Teléfono del coordinador</label>
-      <input type="tel" id="sede1CoordTelefono" required>
+  <label>Teléfono del coordinador</label>
+  <input type="tel" id="sede1CoordTelefono" required>
 
-      <h3>Facilitadores de sede principal</h3>
-      <div id="facilitadores_sede1"></div>
+  <h3>Facilitadores de la sede principal</h3>
+  <div id="facilitadores_sede1"></div>
 
-      <button type="button" class="btn-agregar" onclick="agregarFacilitador(1)">
-        + Agregar facilitador
-      </button>
-    </div>
+  <button type="button" class="btn-agregar" onclick="agregarFacilitador(1)">
+    + Agregar facilitador
+  </button>
+</div>
 
-    <button type="button" id="btnAgregarSede" class="btn-secundaria" onclick="mostrarSedeAdicional()">
-      + Añadir sede adicional
-    </button>
+<button type="button" id="btnAgregarSede" class="btn-secundaria" onclick="mostrarSedeAdicional()">
+  + Añadir sede adicional
+</button>
 
-    <div class="seccion oculto" id="sedeAdicional">
-      <h3>Sede adicional</h3>
+<div class="seccion oculto" id="sedeAdicional">
+  <h3>Sede adicional</h3>
 
-      <label>Nombre del centro sede adicional</label>
-      <input type="text" id="sede2Centro">
+  <label>Nombre del centro sede adicional</label>
+  <input type="text" id="sede2Centro">
 
-      <label>Cantidad estimada de estudiantes</label>
-      <input type="number" id="sede2Estudiantes" min="1">
+  <label>Cantidad estimada de estudiantes</label>
+  <input type="number" id="sede2Estudiantes" min="1">
 
-      <label>Cantidad estimada de grupos</label>
-      <input type="number" id="sede2Grupos" min="1" max="6">
+  <label>Cantidad estimada de grupos</label>
+  <input type="number" id="sede2Grupos" min="1" max="6">
 
-      <h3>Coordinador de sede adicional</h3>
+  <h3>Coordinador de la sede adicional</h3>
 
-      <label>Nombre del coordinador</label>
-      <input type="text" id="sede2CoordNombre">
+  <label>Nombre del coordinador</label>
+  <input type="text" id="sede2CoordNombre">
 
-      <label>Cédula del coordinador</label>
-      <input type="text" id="sede2CoordCedula" placeholder="000-0000000-0">
+  <label>Cédula del coordinador</label>
+  <input type="text" id="sede2CoordCedula" placeholder="000-0000000-0">
 
-      <label>Teléfono del coordinador</label>
-      <input type="tel" id="sede2CoordTelefono">
+  <label>Teléfono del coordinador</label>
+  <input type="tel" id="sede2CoordTelefono">
 
-      <h3>Facilitadores de sede adicional</h3>
-      <div id="facilitadores_sede2"></div>
+  <h3>Facilitadores de la sede adicional</h3>
+  <div id="facilitadores_sede2"></div>
 
-      <button type="button" class="btn-agregar" onclick="agregarFacilitador(2)">
-        + Agregar facilitador
-      </button>
+  <button type="button" class="btn-agregar" onclick="agregarFacilitador(2)">
+    + Agregar facilitador
+  </button>
 
-      <button type="button" class="btn-eliminar" onclick="ocultarSedeAdicional()">
-        Eliminar sede adicional
-      </button>
-    </div>
+  <button type="button" class="btn-eliminar" onclick="ocultarSedeAdicional()">
+    Eliminar sede adicional
+  </button>
+</div>
 
-    <div class="seccion">
-      <h3>Observaciones</h3>
+<div class="seccion">
+  <h3>Observaciones</h3>
+  <label>Observaciones o necesidades identificadas</label>
+  <textarea id="observaciones" rows="4"></textarea>
+</div>
 
-      <label>Observaciones o necesidades identificadas</label>
-      <textarea id="observaciones" rows="4"></textarea>
-    </div>
+<button type="submit" id="btnEnviar" class="btn-enviar">Enviar información</button>
 
-    <button type="submit" id="btnEnviar" class="btn-enviar">
-      Enviar información
-    </button>
+<div id="mensaje" class="mensaje"></div>
 
-    <div id="mensaje" class="mensaje"></div>
-
-  </form>
+</form>
 </div>
 
 <script>
 const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbyGTmdgnBZp2CS6ogKe4HNTcHlL-Flwex_RAlkOPLeKA_XIWDdzZ_7sf75vMzVzmJ78/exec";
 
 const catalogoDistritos = {
-  "01 - BARAHONA": [
-    "0101 - PEDERNALES",
-    "0102 - ENRIQUILLO",
-    "0103 - BARAHONA",
-    "0104 - CABRAL",
-    "0105 - VICENTE NOBLE"
-  ],
-  "02 - SAN JUAN DE LA MAGUANA": [
-    "0201 - COMENDADOR",
-    "0202 - PEDRO SANTANA",
-    "0203 - LAS MATAS DE FARFAN",
-    "0204 - EL CERCADO",
-    "0205 - SAN JUAN ESTE",
-    "0206 - SAN JUAN OESTE",
-    "0207 - HONDO VALLE"
-  ],
-  "03 - AZUA": [
-    "0301 - AZUA",
-    "0302 - PADRE DE LAS CASAS",
-    "0303 - SAN JOSE DE OCOA",
-    "0304 - BANI",
-    "0305 - NIZAO"
-  ],
-  "04 - SAN CRISTOBAL": [
-    "0401 - CAMBITA GARABITOS",
-    "0402 - SAN CRISTOBAL NORTE",
-    "0403 - SAN CRISTOBAL SUR",
-    "0404 - VILLA ALTAGRACIA",
-    "0405 - YAGUATE",
-    "0406 - HAINA",
-    "0407 - SAN GREGORIO DE NIGUA"
-  ],
-  "05 - SAN PEDRO DE MACORIS": [
-    "0501 - SAN PEDRO DE MACORIS ESTE",
-    "0502 - SAN PEDRO DE MACORIS OESTE",
-    "0503 - LA ROMANA",
-    "0504 - HATO MAYOR",
-    "0505 - SABANA DE LA MAR",
-    "0506 - CONSUELO",
-    "0507 - SAN JOSE DE LOS LLANOS",
-    "0508 - QUISQUEYA",
-    "0509 - EL VALLE",
-    "0510 - GUAYMATE",
-    "0511 - VILLA HERMOSA"
-  ],
-  "06 - LA VEGA": [
-    "0601 - JOSE CONTRERAS",
-    "0602 - CONSTANZA",
-    "0603 - JARABACOA",
-    "0604 - LA VEGA OESTE",
-    "0605 - LA VEGA ESTE",
-    "0606 - MOCA",
-    "0607 - GASPAR HERNANDEZ",
-    "0608 - JAMAO AL NORTE",
-    "0609 - SAN VICTOR",
-    "0610 - JIMA ABAJO"
-  ],
-  "07 - SAN FRANCISCO DE MACORIS": [
-    "0701 - TENARES",
-    "0702 - SALCEDO",
-    "0703 - CASTILLO",
-    "0704 - VILLA RIVA",
-    "0705 - SAN FRANCISCO DE MACORIS SUR-E",
-    "0706 - SAN FRANCISCO DE MACORIS NOR-O",
-    "0707 - VILLA TAPIA"
-  ],
-  "08 - SANTIAGO": [
-    "0801 - SAN JOSE DE LAS MATAS",
-    "0802 - JANICO",
-    "0803 - SANTIAGO SUR-ESTE",
-    "0804 - SANTIAGO NOROESTE",
-    "0805 - SANTIAGO CENTRO-OESTE",
-    "0806 - SANTIAGO NORESTE",
-    "0807 - VILLA BISONO",
-    "0808 - LICEY AL MEDIO",
-    "0809 - TAMBORIL",
-    "0810 - VILLA GONZALEZ"
-  ],
-  "09 - MAO": [
-    "0901 - MAO",
-    "0902 - ESPERANZA",
-    "0903 - SAN IGNACIO DE SABANETA",
-    "0904 - MONCION",
-    "0905 - LAGUNA SALADA",
-    "0906 - VILLA LOS ALMACIGOS"
-  ],
-  "10 - SANTO DOMINGO": [
-    "1001 - VILLA MELLA",
-    "1002 - SABANA PERDIDA",
-    "1003 - SANTO DOMINGO NORESTE",
-    "1004 - SANTO DOMINGO ORIENTAL",
-    "1005 - BOCA CHICA",
-    "1006 - MENDOZA",
-    "1007 - SAN ANTONIO DE GUERRA"
-  ],
-  "11 - PUERTO PLATA": [
-    "1101 - SOSUA",
-    "1102 - PUERTO PLATA",
-    "1103 - IMBERT",
-    "1104 - LUPERON",
-    "1105 - ALTAMIRA",
-    "1106 - EL MAMEY",
-    "1107 - VILLA ISABELA"
-  ],
-  "12 - HIGUEY": [
-    "1201 - HIGUEY",
-    "1202 - SAN RAFAEL DEL YUMA",
-    "1203 - EL SEIBO",
-    "1204 - MICHES"
-  ],
-  "13 - MONTE CRISTI": [
-    "1301 - MONTE CRISTI",
-    "1302 - GUAYUBIN",
-    "1303 - VILLA VASQUEZ",
-    "1304 - DAJABON",
-    "1305 - LOMA DE CABRERA",
-    "1306 - RESTAURACION"
-  ],
-  "14 - NAGUA": [
-    "1401 - NAGUA",
-    "1402 - CABRERA",
-    "1403 - RIO SAN JUAN",
-    "1404 - SAMANA",
-    "1405 - SANCHEZ",
-    "1406 - EL FACTOR",
-    "1407 - LAS TERRENAS"
-  ],
-  "15 - SANTO DOMINGO": [
-    "1501 - LOS ALCARRIZOS",
-    "1502 - SANTO DOMINGO CENTRO",
-    "1503 - SANTO DOMINGO SURCENTRAL",
-    "1504 - SANTO DOMINGO NOROESTE",
-    "1505 - HERRERA",
-    "1506 - PEDRO BRAND"
-  ],
-  "16 - COTUI": [
-    "1601 - COTUI",
-    "1602 - FANTINO",
-    "1603 - CEVICOS",
-    "1604 - BONAO SUROESTE",
-    "1605 - PIEDRA BLANCA",
-    "1606 - BONAO NORDESTE",
-    "1607 - VILLA LA MATA"
-  ],
-  "17 - MONTE PLATA": [
-    "1701 - YAMASA",
-    "1702 - MONTE PLATA",
-    "1703 - BAYAGUANA",
-    "1704 - SABANA GRANDE DE BOYA",
-    "1705 - PERALVILLO"
-  ],
-  "18 - BAHORUCO": [
-    "1801 - NEIBA",
-    "1802 - TAMAYO",
-    "1803 - VILLA JARAGUA",
-    "1804 - JIMANI",
-    "1805 - DUVERGE"
-  ]
+  "01 - BARAHONA": ["0101 - PEDERNALES","0102 - ENRIQUILLO","0103 - BARAHONA","0104 - CABRAL","0105 - VICENTE NOBLE"],
+  "02 - SAN JUAN DE LA MAGUANA": ["0201 - COMENDADOR","0202 - PEDRO SANTANA","0203 - LAS MATAS DE FARFAN","0204 - EL CERCADO","0205 - SAN JUAN ESTE","0206 - SAN JUAN OESTE","0207 - HONDO VALLE"],
+  "03 - AZUA": ["0301 - AZUA","0302 - PADRE DE LAS CASAS","0303 - SAN JOSE DE OCOA","0304 - BANI","0305 - NIZAO"],
+  "04 - SAN CRISTOBAL": ["0401 - CAMBITA GARABITOS","0402 - SAN CRISTOBAL NORTE","0403 - SAN CRISTOBAL SUR","0404 - VILLA ALTAGRACIA","0405 - YAGUATE","0406 - HAINA","0407 - SAN GREGORIO DE NIGUA"],
+  "05 - SAN PEDRO DE MACORIS": ["0501 - SAN PEDRO DE MACORIS ESTE","0502 - SAN PEDRO DE MACORIS OESTE","0503 - LA ROMANA","0504 - HATO MAYOR","0505 - SABANA DE LA MAR","0506 - CONSUELO","0507 - SAN JOSE DE LOS LLANOS","0508 - QUISQUEYA","0509 - EL VALLE","0510 - GUAYMATE","0511 - VILLA HERMOSA"],
+  "06 - LA VEGA": ["0601 - JOSE CONTRERAS","0602 - CONSTANZA","0603 - JARABACOA","0604 - LA VEGA OESTE","0605 - LA VEGA ESTE","0606 - MOCA","0607 - GASPAR HERNANDEZ","0608 - JAMAO AL NORTE","0609 - SAN VICTOR","0610 - JIMA ABAJO"],
+  "07 - SAN FRANCISCO DE MACORIS": ["0701 - TENARES","0702 - SALCEDO","0703 - CASTILLO","0704 - VILLA RIVA","0705 - SAN FRANCISCO DE MACORIS SUR-E","0706 - SAN FRANCISCO DE MACORIS NOR-O","0707 - VILLA TAPIA"],
+  "08 - SANTIAGO": ["0801 - SAN JOSE DE LAS MATAS","0802 - JANICO","0803 - SANTIAGO SUR-ESTE","0804 - SANTIAGO NOROESTE","0805 - SANTIAGO CENTRO-OESTE","0806 - SANTIAGO NORESTE","0807 - VILLA BISONO","0808 - LICEY AL MEDIO","0809 - TAMBORIL","0810 - VILLA GONZALEZ"],
+  "09 - MAO": ["0901 - MAO","0902 - ESPERANZA","0903 - SAN IGNACIO DE SABANETA","0904 - MONCION","0905 - LAGUNA SALADA","0906 - VILLA LOS ALMACIGOS"],
+  "10 - SANTO DOMINGO": ["1001 - VILLA MELLA","1002 - SABANA PERDIDA","1003 - SANTO DOMINGO NORESTE","1004 - SANTO DOMINGO ORIENTAL","1005 - BOCA CHICA","1006 - MENDOZA","1007 - SAN ANTONIO DE GUERRA"],
+  "11 - PUERTO PLATA": ["1101 - SOSUA","1102 - PUERTO PLATA","1103 - IMBERT","1104 - LUPERON","1105 - ALTAMIRA","1106 - EL MAMEY","1107 - VILLA ISABELA"],
+  "12 - HIGUEY": ["1201 - HIGUEY","1202 - SAN RAFAEL DEL YUMA","1203 - EL SEIBO","1204 - MICHES"],
+  "13 - MONTE CRISTI": ["1301 - MONTE CRISTI","1302 - GUAYUBIN","1303 - VILLA VASQUEZ","1304 - DAJABON","1305 - LOMA DE CABRERA","1306 - RESTAURACION"],
+  "14 - NAGUA": ["1401 - NAGUA","1402 - CABRERA","1403 - RIO SAN JUAN","1404 - SAMANA","1405 - SANCHEZ","1406 - EL FACTOR","1407 - LAS TERRENAS"],
+  "15 - SANTO DOMINGO": ["1501 - LOS ALCARRIZOS","1502 - SANTO DOMINGO CENTRO","1503 - SANTO DOMINGO SURCENTRAL","1504 - SANTO DOMINGO NOROESTE","1505 - HERRERA","1506 - PEDRO BRAND"],
+  "16 - COTUI": ["1601 - COTUI","1602 - FANTINO","1603 - CEVICOS","1604 - BONAO SUROESTE","1605 - PIEDRA BLANCA","1606 - BONAO NORDESTE","1607 - VILLA LA MATA"],
+  "17 - MONTE PLATA": ["1701 - YAMASA","1702 - MONTE PLATA","1703 - BAYAGUANA","1704 - SABANA GRANDE DE BOYA","1705 - PERALVILLO"],
+  "18 - BAHORUCO": ["1801 - NEIBA","1802 - TAMAYO","1803 - VILLA JARAGUA","1804 - JIMANI","1805 - DUVERGE"]
 };
 
 const regionalSelect = document.getElementById("regional");
 const distritoSelect = document.getElementById("distrito");
 
-let contadorFacilitadores = {
-  1: 0,
-  2: 0
-};
+let contadorFacilitadores = {1: 0, 2: 0};
 
 document.addEventListener("DOMContentLoaded", cargarRegionales);
 
@@ -437,7 +305,6 @@ function cargarRegionales() {
 
 regionalSelect.addEventListener("change", function() {
   distritoSelect.innerHTML = '<option value="">Seleccione un distrito</option>';
-
   const regional = regionalSelect.value;
 
   if (!regional) {
@@ -457,7 +324,6 @@ regionalSelect.addEventListener("change", function() {
 
 function agregarFacilitador(sede) {
   contadorFacilitadores[sede]++;
-
   const numero = contadorFacilitadores[sede];
   const contenedor = document.getElementById(`facilitadores_sede${sede}`);
 
@@ -469,16 +335,16 @@ function agregarFacilitador(sede) {
     <h4>Facilitador ${numero}</h4>
 
     <label>Nombre completo</label>
-    <input type="text" id="sede${sede}_fac${numero}_nombre" required>
+    <input type="text" required>
 
     <label>Cédula</label>
-    <input type="text" id="sede${sede}_fac${numero}_cedula" required placeholder="000-0000000-0">
+    <input type="text" required placeholder="000-0000000-0">
 
     <label>Teléfono</label>
-    <input type="tel" id="sede${sede}_fac${numero}_telefono" required>
+    <input type="tel" required>
 
     <label>Centro educativo donde labora</label>
-    <input type="text" id="sede${sede}_fac${numero}_centroLabora" required>
+    <input type="text" required>
 
     <button type="button" class="btn-eliminar" onclick="eliminarFacilitador(${sede}, ${numero})">
       Eliminar facilitador
@@ -490,9 +356,7 @@ function agregarFacilitador(sede) {
 
 function eliminarFacilitador(sede, numero) {
   const elemento = document.getElementById(`sede${sede}_facilitador_${numero}`);
-  if (elemento) {
-    elemento.remove();
-  }
+  if (elemento) elemento.remove();
 }
 
 function mostrarSedeAdicional() {
@@ -520,28 +384,26 @@ function ocultarSedeAdicional() {
 document.getElementById("formulario").addEventListener("submit", function(e) {
   e.preventDefault();
 
-  const facilitadoresSede1 = obtenerFacilitadores(1);
+  const fac1 = obtenerFacilitadores(1);
 
-  if (facilitadoresSede1.length === 0) {
+  if (fac1.length === 0) {
     mostrarMensaje("Debe registrar al menos un facilitador para la sede principal.", "error");
     return;
   }
 
-  const sedes = [
-    construirSede(1, "Principal", facilitadoresSede1)
-  ];
+  const sedes = [construirSede(1, "Principal", fac1)];
 
   const sedeAdicionalVisible = !document.getElementById("sedeAdicional").classList.contains("oculto");
 
   if (sedeAdicionalVisible) {
-    const facilitadoresSede2 = obtenerFacilitadores(2);
+    const fac2 = obtenerFacilitadores(2);
 
-    if (facilitadoresSede2.length === 0) {
+    if (fac2.length === 0) {
       mostrarMensaje("Debe registrar al menos un facilitador para la sede adicional.", "error");
       return;
     }
 
-    sedes.push(construirSede(2, "Adicional", facilitadoresSede2));
+    sedes.push(construirSede(2, "Adicional", fac2));
   }
 
   const payload = {
@@ -556,9 +418,9 @@ document.getElementById("formulario").addEventListener("submit", function(e) {
   enviarDatos(payload);
 });
 
-function construirSede(numero, tipo, facilitadores) {
+function construirSede(numero, tipoSede, facilitadores) {
   return {
-    tipoSede: tipo,
+    tipoSede: tipoSede,
     centroSede: document.getElementById(`sede${numero}Centro`).value.trim(),
     cantidadEstudiantes: document.getElementById(`sede${numero}Estudiantes`).value,
     cantidadGrupos: document.getElementById(`sede${numero}Grupos`).value,
@@ -604,7 +466,7 @@ function enviarDatos(payload) {
     body: formData
   })
   .then(() => {
-    mostrarMensaje("Información enviada. Verifique el registro en la hoja de cálculo.", "ok");
+    mostrarMensaje("Su distrito ha completado el registro satisfactoriamente.", "ok");
     reiniciarFormulario();
   })
   .catch(() => {
@@ -625,8 +487,7 @@ function reiniciarFormulario() {
   document.getElementById("facilitadores_sede1").innerHTML = "";
   document.getElementById("facilitadores_sede2").innerHTML = "";
 
-  contadorFacilitadores[1] = 0;
-  contadorFacilitadores[2] = 0;
+  contadorFacilitadores = {1: 0, 2: 0};
 
   ocultarSedeAdicional();
 }

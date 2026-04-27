@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Registro de Sedes - Campamento Aprender es Divertido 2025</title>
+  <title>Registro de Sedes - Campamento Aprender es Divertido</title>
 
   <style>
     body {
@@ -24,7 +24,6 @@
 
     h1, h2, h3 {
       text-align: center;
-      margin-bottom: 8px;
     }
 
     .subtitulo {
@@ -63,7 +62,7 @@
 
     .facilitador {
       border: 1px solid #ccc;
-      background: #fff;
+      background: white;
       padding: 12px;
       margin-top: 12px;
       border-radius: 6px;
@@ -110,12 +109,6 @@
       display: none;
     }
 
-    .nota {
-      font-size: 14px;
-      color: #555;
-      line-height: 1.4;
-    }
-
     .mensaje {
       margin-top: 18px;
       padding: 12px;
@@ -144,9 +137,9 @@
 
 <div class="container">
 
-  <h1>Campamento Aprender es Divertido 2025</h1>
-  <h2>Registro de sedes por distrito</h2>
-  <p class="subtitulo">Formulario dirigido a las regionales y distritos educativos</p>
+  <h1>Campamento Aprender es Divertido</h1>
+  <h2>Registro de sedes, coordinadores y facilitadores</h2>
+  <p class="subtitulo">Formulario para el registro oficial por distrito educativo</p>
 
   <form id="formulario">
 
@@ -164,20 +157,20 @@
       </select>
 
       <label>Nombre de quien completa el formulario</label>
-      <input type="text" id="responsableRegistro" required>
+      <input type="text" id="responsable" required>
 
       <label>Teléfono de contacto</label>
-      <input type="tel" id="telefonoContacto" required>
+      <input type="tel" id="telefono" required>
 
       <label>Correo electrónico</label>
-      <input type="email" id="correoContacto" required>
+      <input type="email" id="correo" required>
     </div>
 
     <div class="seccion">
       <h3>Sede principal</h3>
 
       <label>Nombre del centro sede</label>
-      <input type="text" id="sede1CentroNombre" required placeholder="Escriba el nombre del centro sede">
+      <input type="text" id="sede1Centro" required>
 
       <label>Cantidad estimada de estudiantes</label>
       <input type="number" id="sede1Estudiantes" min="1" required>
@@ -185,7 +178,7 @@
       <label>Cantidad estimada de grupos</label>
       <input type="number" id="sede1Grupos" min="1" max="6" required>
 
-      <h3>Coordinador de la sede principal</h3>
+      <h3>Coordinador de sede principal</h3>
 
       <label>Nombre del coordinador</label>
       <input type="text" id="sede1CoordNombre" required>
@@ -196,7 +189,7 @@
       <label>Teléfono del coordinador</label>
       <input type="tel" id="sede1CoordTelefono" required>
 
-      <h3>Facilitadores de la sede principal</h3>
+      <h3>Facilitadores de sede principal</h3>
       <div id="facilitadores_sede1"></div>
 
       <button type="button" class="btn-agregar" onclick="agregarFacilitador(1)">
@@ -210,10 +203,9 @@
 
     <div class="seccion oculto" id="sedeAdicional">
       <h3>Sede adicional</h3>
-      <p class="nota">Complete esta sección solo si el distrito tendrá una segunda sede.</p>
 
       <label>Nombre del centro sede adicional</label>
-      <input type="text" id="sede2CentroNombre" placeholder="Escriba el nombre del centro sede adicional">
+      <input type="text" id="sede2Centro">
 
       <label>Cantidad estimada de estudiantes</label>
       <input type="number" id="sede2Estudiantes" min="1">
@@ -221,7 +213,7 @@
       <label>Cantidad estimada de grupos</label>
       <input type="number" id="sede2Grupos" min="1" max="6">
 
-      <h3>Coordinador de la sede adicional</h3>
+      <h3>Coordinador de sede adicional</h3>
 
       <label>Nombre del coordinador</label>
       <input type="text" id="sede2CoordNombre">
@@ -232,7 +224,7 @@
       <label>Teléfono del coordinador</label>
       <input type="tel" id="sede2CoordTelefono">
 
-      <h3>Facilitadores de la sede adicional</h3>
+      <h3>Facilitadores de sede adicional</h3>
       <div id="facilitadores_sede2"></div>
 
       <button type="button" class="btn-agregar" onclick="agregarFacilitador(2)">
@@ -246,6 +238,7 @@
 
     <div class="seccion">
       <h3>Observaciones</h3>
+
       <label>Observaciones o necesidades identificadas</label>
       <textarea id="observaciones" rows="4"></textarea>
     </div>
@@ -260,7 +253,7 @@
 </div>
 
 <script>
-const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbxLqxRYDX_cyKTsx0VrF7bhYesxny6EJake4j4Q4fCO7R7QNtknnzfPtN4ENiVoo7Lj/exec";
+const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbyGTmdgnBZp2CS6ogKe4HNTcHlL-Flwex_RAlkOPLeKA_XIWDdzZ_7sf75vMzVzmJ78/exec";
 
 const catalogoDistritos = {
   "01 - BARAHONA": [
@@ -336,7 +329,7 @@ const catalogoDistritos = {
     "0804 - SANTIAGO NOROESTE",
     "0805 - SANTIAGO CENTRO-OESTE",
     "0806 - SANTIAGO NORESTE",
-    "0807 - VILLA BISONO (NAVARRETE)",
+    "0807 - VILLA BISONO",
     "0808 - LICEY AL MEDIO",
     "0809 - TAMBORIL",
     "0810 - VILLA GONZALEZ"
@@ -426,7 +419,7 @@ const catalogoDistritos = {
 const regionalSelect = document.getElementById("regional");
 const distritoSelect = document.getElementById("distrito");
 
-const contadorFacilitadores = {
+let contadorFacilitadores = {
   1: 0,
   2: 0
 };
@@ -434,8 +427,6 @@ const contadorFacilitadores = {
 document.addEventListener("DOMContentLoaded", cargarRegionales);
 
 function cargarRegionales() {
-  regionalSelect.innerHTML = '<option value="">Seleccione una regional</option>';
-
   Object.keys(catalogoDistritos).forEach(regional => {
     const option = document.createElement("option");
     option.value = regional;
@@ -447,9 +438,9 @@ function cargarRegionales() {
 regionalSelect.addEventListener("change", function() {
   distritoSelect.innerHTML = '<option value="">Seleccione un distrito</option>';
 
-  const regional = this.value;
+  const regional = regionalSelect.value;
 
-  if (!regional || !catalogoDistritos[regional]) {
+  if (!regional) {
     distritoSelect.disabled = true;
     return;
   }
@@ -487,7 +478,7 @@ function agregarFacilitador(sede) {
     <input type="tel" id="sede${sede}_fac${numero}_telefono" required>
 
     <label>Centro educativo donde labora</label>
-    <input type="text" id="sede${sede}_fac${numero}_centro_labora" required>
+    <input type="text" id="sede${sede}_fac${numero}_centroLabora" required>
 
     <button type="button" class="btn-eliminar" onclick="eliminarFacilitador(${sede}, ${numero})">
       Eliminar facilitador
@@ -499,16 +490,17 @@ function agregarFacilitador(sede) {
 
 function eliminarFacilitador(sede, numero) {
   const elemento = document.getElementById(`sede${sede}_facilitador_${numero}`);
-  if (elemento) elemento.remove();
+  if (elemento) {
+    elemento.remove();
+  }
 }
 
 function mostrarSedeAdicional() {
   document.getElementById("sedeAdicional").classList.remove("oculto");
   document.getElementById("btnAgregarSede").classList.add("oculto");
 
-  const campos = document.querySelectorAll("#sedeAdicional input");
-  campos.forEach(campo => {
-    campo.required = true;
+  document.querySelectorAll("#sedeAdicional input").forEach(input => {
+    input.required = true;
   });
 }
 
@@ -516,10 +508,9 @@ function ocultarSedeAdicional() {
   document.getElementById("sedeAdicional").classList.add("oculto");
   document.getElementById("btnAgregarSede").classList.remove("oculto");
 
-  const campos = document.querySelectorAll("#sedeAdicional input");
-  campos.forEach(campo => {
-    campo.required = false;
-    campo.value = "";
+  document.querySelectorAll("#sedeAdicional input").forEach(input => {
+    input.required = false;
+    input.value = "";
   });
 
   document.getElementById("facilitadores_sede2").innerHTML = "";
@@ -536,8 +527,9 @@ document.getElementById("formulario").addEventListener("submit", function(e) {
     return;
   }
 
-  const sedes = [];
-  sedes.push(construirSede(1, "Principal", facilitadoresSede1));
+  const sedes = [
+    construirSede(1, "Principal", facilitadoresSede1)
+  ];
 
   const sedeAdicionalVisible = !document.getElementById("sedeAdicional").classList.contains("oculto");
 
@@ -549,42 +541,32 @@ document.getElementById("formulario").addEventListener("submit", function(e) {
       return;
     }
 
-    if (
-      document.getElementById("sede1CentroNombre").value.trim().toUpperCase() ===
-      document.getElementById("sede2CentroNombre").value.trim().toUpperCase()
-    ) {
-      mostrarMensaje("La sede adicional no puede tener el mismo nombre que la sede principal.", "error");
-      return;
-    }
-
     sedes.push(construirSede(2, "Adicional", facilitadoresSede2));
   }
 
   const payload = {
     regional: regionalSelect.value,
     distrito: distritoSelect.value,
-    responsableRegistro: document.getElementById("responsableRegistro").value.trim(),
-    telefonoContacto: document.getElementById("telefonoContacto").value.trim(),
-    correoContacto: document.getElementById("correoContacto").value.trim(),
+    responsable: document.getElementById("responsable").value.trim(),
+    telefono: document.getElementById("telefono").value.trim(),
+    correo: document.getElementById("correo").value.trim(),
     sedes: sedes
   };
 
   enviarDatos(payload);
 });
 
-function construirSede(sede, tipoSede, facilitadores) {
+function construirSede(numero, tipo, facilitadores) {
   return {
-    tipoSede: tipoSede,
-    codigoCentro: "",
-    centroSede: document.getElementById(`sede${sede}CentroNombre`).value.trim(),
-    sector: "",
-    cantidadEstudiantes: document.getElementById(`sede${sede}Estudiantes`).value,
-    cantidadGrupos: document.getElementById(`sede${sede}Grupos`).value,
+    tipoSede: tipo,
+    centroSede: document.getElementById(`sede${numero}Centro`).value.trim(),
+    cantidadEstudiantes: document.getElementById(`sede${numero}Estudiantes`).value,
+    cantidadGrupos: document.getElementById(`sede${numero}Grupos`).value,
     observaciones: document.getElementById("observaciones").value.trim(),
     coordinador: {
-      nombre: document.getElementById(`sede${sede}CoordNombre`).value.trim(),
-      cedula: document.getElementById(`sede${sede}CoordCedula`).value.trim(),
-      telefono: document.getElementById(`sede${sede}CoordTelefono`).value.trim()
+      nombre: document.getElementById(`sede${numero}CoordNombre`).value.trim(),
+      cedula: document.getElementById(`sede${numero}CoordCedula`).value.trim(),
+      telefono: document.getElementById(`sede${numero}CoordTelefono`).value.trim()
     },
     facilitadores: facilitadores
   };
@@ -592,8 +574,7 @@ function construirSede(sede, tipoSede, facilitadores) {
 
 function obtenerFacilitadores(sede) {
   const facilitadores = [];
-  const contenedor = document.getElementById(`facilitadores_sede${sede}`);
-  const bloques = contenedor.querySelectorAll(".facilitador");
+  const bloques = document.querySelectorAll(`#facilitadores_sede${sede} .facilitador`);
 
   bloques.forEach(bloque => {
     const inputs = bloque.querySelectorAll("input");
@@ -611,7 +592,6 @@ function obtenerFacilitadores(sede) {
 
 function enviarDatos(payload) {
   const btnEnviar = document.getElementById("btnEnviar");
-
   btnEnviar.disabled = true;
   btnEnviar.textContent = "Enviando...";
 
@@ -627,9 +607,8 @@ function enviarDatos(payload) {
     mostrarMensaje("Información enviada. Verifique el registro en la hoja de cálculo.", "ok");
     reiniciarFormulario();
   })
-  .catch(error => {
-    console.error(error);
-    mostrarMensaje("Error al enviar la información.", "error");
+  .catch(() => {
+    mostrarMensaje("No se pudo enviar la información.", "error");
   })
   .finally(() => {
     btnEnviar.disabled = false;
@@ -656,7 +635,6 @@ function mostrarMensaje(texto, tipo) {
   const mensaje = document.getElementById("mensaje");
   mensaje.textContent = texto;
   mensaje.className = "mensaje " + tipo;
-  mensaje.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 </script>
 

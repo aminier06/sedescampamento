@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <base target="_top">
+  <title>Registro de Sedes - Campamento Aprender es Divertido 2025</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 20px;
+      color: #222;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.12);
+    }
+
+    h1, h2, h3 {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .subtitulo {
+      text-align: center;
+      color: #555;
+      margin-bottom: 25px;
+    }
+
+    .seccion {
+      border: 1px solid #ddd;
+      padding: 18px;
+      margin-top: 20px;
+      border-radius: 8px;
+      background: #fafafa;
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: bold;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 9px;
+      margin-top: 5px;
+      box-sizing: border-box;
+      border: 1px solid #bbb;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    .facilitador {
+      border: 1px solid #ccc;
+      background: #fff;
+      padding: 12px;
+      margin-top: 12px;
+      border-radius: 6px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .btn-agregar {
+      background: #0066cc;
+      color: white;
+    }
+
+    .btn-eliminar {
+      background: #cc0000;
+      color: white;
+    }
+
+    .btn-secundaria {
+      background: #6c757d;
+      color: white;
+    }
+
+    .btn-enviar {
+      background: #198754;
+      color: white;
+      width: 100%;
+      font-size: 17px;
+      padding: 13px;
+    }
+
+    .oculto {
+      display: none;
+    }
+
+    .nota {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.4;
+    }
+
+    .mensaje {
+      margin-top: 18px;
+      padding: 12px;
+      border-radius: 6px;
+      display: none;
+      font-weight: bold;
+    }
+
+    .mensaje.ok {
+      display: block;
+      background: #d1e7dd;
+      color: #0f5132;
+      border: 1px solid #badbcc;
+    }
+
+    .mensaje.error {
+      display: block;
+      background: #f8d7da;
+      color: #842029;
+      border: 1px solid #f5c2c7;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>Campamento Aprender es Divertido 2025</h1>
+  <h2>Registro de sedes por distrito</h2>
+  <p class="subtitulo">Formulario dirigido a las regionales y distritos educativos</p>
+
+  <form id="formulario">
+
+    <div class="seccion">
+      <h3>Datos generales</h3>
+
+      <label>Regional</label>
+      <select id="regional" name="regional" required>
+        <option value="">Seleccione una regional</option>
+      </select>
+
+      <label>Distrito Educativo</label>
+      <select id="distrito" name="distrito" required disabled>
+        <option value="">Seleccione un distrito</option>
+      </select>
+
+      <label>Nombre de quien completa el formulario</label>
+      <input type="text" id="responsableRegistro" name="responsable_registro" required>
+
+      <label>Teléfono de contacto</label>
+      <input type="tel" id="telefonoContacto" name="telefono_contacto" required>
+
+      <label>Correo electrónico</label>
+      <input type="email" id="correoContacto" name="correo_contacto" required>
+    </div>
+
+    <div class="seccion" id="sedePrincipal">
+      <h3>Sede principal</h3>
+
+      <label>Centro sede</label>
+      <select id="sede1Centro" required disabled>
+        <option value="">Seleccione un centro</option>
+      </select>
+
+      <input type="hidden" id="sede1CodigoCentro">
+      <input type="hidden" id="sede1CentroNombre">
+      <input type="hidden" id="sede1Sector">
+
+      <label>Sector</label>
+      <input type="text" id="sede1SectorVisible" readonly>
+
+      <label>Cantidad estimada de estudiantes</label>
+      <input type="number" id="sede1Estudiantes" min="1" required>
+
+      <label>Cantidad estimada de grupos</label>
+      <input type="number" id="sede1Grupos" min="1" max="6" required>
+
+      <h3>Coordinador de la sede principal</h3>
+
+      <label>Nombre del coordinador</label>
+      <input type="text" id="sede1CoordNombre" required>
+
+      <label>Cédula del coordinador</label>
+      <input type="text" id="sede1CoordCedula" required placeholder="000-0000000-0">
+
+      <label>Teléfono del coordinador</label>
+      <input type="tel" id="sede1CoordTelefono" required>
+
+      <h3>Facilitadores de la sede principal</h3>
+      <div id="facilitadores_sede1"></div>
+
+      <button type="button" class="btn-agregar" onclick="agregarFacilitador(1)">
+        + Agregar facilitador
+      </button>
+    </div>
+
+    <button type="button" id="btnAgregarSede" class="btn-secundaria" onclick="mostrarSedeAdicional()">
+      + Añadir sede adicional
+    </button>
+
+    <div class="seccion oculto" id="sedeAdicional">
+      <h3>Sede adicional</h3>
+      <p class="nota">Complete esta sección solo si el distrito tendrá una segunda sede.</p>
+
+      <label>Centro sede adicional</label>
+      <select id="sede2Centro" disabled>
+        <option value="">Seleccione un centro</option>
+      </select>
+
+      <input type="hidden" id="sede2CodigoCentro">
+      <input type="hidden" id="sede2CentroNombre">
+      <input type="hidden" id="sede2Sector">
+
+      <label>Sector</label>
+      <input type="text" id="sede2SectorVisible" readonly>
+
+      <label>Cantidad estimada de estudiantes</label>
+      <input type="number" id="sede2Estudiantes" min="1">
+
+      <label>Cantidad estimada de grupos</label>
+      <input type="number" id="sede2Grupos" min="1" max="6">
+
+      <h3>Coordinador de la sede adicional</h3>
+
+      <label>Nombre del coordinador</label>
+      <input type="text" id="sede2CoordNombre">
+
+      <label>Cédula del coordinador</label>
+      <input type="text" id="sede2CoordCedula" placeholder="000-0000000-0">
+
+      <label>Teléfono del coordinador</label>
+      <input type="tel" id="sede2CoordTelefono">
+
+      <h3>Facilitadores de la sede adicional</h3>
+      <div id="facilitadores_sede2"></div>
+
+      <button type="button" class="btn-agregar" onclick="agregarFacilitador(2)">
+        + Agregar facilitador
+      </button>
+
+      <button type="button" class="btn-eliminar" onclick="ocultarSedeAdicional()">
+        Eliminar sede adicional
+      </button>
+    </div>
+
+    <div class="seccion">
+      <h3>Observaciones</h3>
+      <label>Observaciones o necesidades identificadas</label>
+      <textarea id="observaciones" rows="4"></textarea>
+    </div>
+
+    <button type="submit" id="btnEnviar" class="btn-enviar">
+      Enviar información
+    </button>
+
+    <div id="mensaje" class="mensaje"></div>
+
+  </form>
+</div>
+
+<script>
+  const catalogoCentros = JSON.parse('<?= catalogoCentros ?>');
+
+  const regionalSelect = document.getElementById("regional");
+  const distritoSelect = document.getElementById("distrito");
+  const sede1CentroSelect = document.getElementById("sede1Centro");
+  const sede2CentroSelect = document.getElementById("sede2Centro");
+
+  const contadorFacilitadores = {
+    1: 0,
+    2: 0
+  };
+
+  cargarRegionales();
+
+  function cargarRegionales() {
+    Object.keys(catalogoCentros).forEach(regional => {
+      const option = document.createElement("option");
+      option.value = regional;
+      option.textContent = regional;
+      regionalSelect.appendChild(option);
+    });
+  }
+
+  regionalSelect.addEventListener("change", function() {
+    limpiarDistrito();
+    limpiarCentros(1);
+    limpiarCentros(2);
+
+    const regional = this.value;
+
+    if (!regional || !catalogoCentros[regional]) {
+      distritoSelect.disabled = true;
+      return;
+    }
+
+    Object.keys(catalogoCentros[regional]).forEach(distrito => {
+      const option = document.createElement("option");
+      option.value = distrito;
+      option.textContent = distrito;
+      distritoSelect.appendChild(option);
+    });
+
+    distritoSelect.disabled = false;
+  });
+
+  distritoSelect.addEventListener("change", function() {
+    limpiarCentros(1);
+    limpiarCentros(2);
+
+    if (!regionalSelect.value || !distritoSelect.value) return;
+
+    cargarCentrosParaSede(1);
+    cargarCentrosParaSede(2);
+  });
+
+  function limpiarDistrito() {
+    distritoSelect.innerHTML = '<option value="">Seleccione un distrito</option>';
+    distritoSelect.disabled = true;
+  }
+
+  function limpiarCentros(sede) {
+    const select = document.getElementById(`sede${sede}Centro`);
+    select.innerHTML = '<option value="">Seleccione un centro</option>';
+    select.disabled = true;
+
+    document.getElementById(`sede${sede}CodigoCentro`).value = "";
+    document.getElementById(`sede${sede}CentroNombre`).value = "";
+    document.getElementById(`sede${sede}Sector`).value = "";
+    document.getElementById(`sede${sede}SectorVisible`).value = "";
+  }
+
+  function cargarCentrosParaSede(sede) {
+    const select = document.getElementById(`sede${sede}Centro`);
+    const regional = regionalSelect.value;
+    const distrito = distritoSelect.value;
+
+    const centros = catalogoCentros[regional][distrito] || [];
+
+    centros.forEach(c => {
+      const option = document.createElement("option");
+      option.value = JSON.stringify(c);
+      option.textContent = `${c.codigo} - ${c.centro}`;
+      select.appendChild(option);
+    });
+
+    select.disabled = false;
+  }
+
+  sede1CentroSelect.addEventListener("change", function() {
+    actualizarDatosCentro(1, this.value);
+  });
+
+  sede2CentroSelect.addEventListener("change", function() {
+    actualizarDatosCentro(2, this.value);
+  });
+
+  function actualizarDatosCentro(sede, valor) {
+    if (!valor) {
+      document.getElementById(`sede${sede}CodigoCentro`).value = "";
+      document.getElementById(`sede${sede}CentroNombre`).value = "";
+      document.getElementById(`sede${sede}Sector`).value = "";
+      document.getElementById(`sede${sede}SectorVisible`).value = "";
+      return;
+    }
+
+    const centro = JSON.parse(valor);
+
+    document.getElementById(`sede${sede}CodigoCentro`).value = centro.codigo;
+    document.getElementById(`sede${sede}CentroNombre`).value = centro.centro;
+    document.getElementById(`sede${sede}Sector`).value = centro.sector || "";
+    document.getElementById(`sede${sede}SectorVisible`).value = centro.sector || "";
+  }
+
+  function agregarFacilitador(sede) {
+    contadorFacilitadores[sede]++;
+
+    const numero = contadorFacilitadores[sede];
+    const contenedor = document.getElementById(`facilitadores_sede${sede}`);
+
+    const div = document.createElement("div");
+    div.className = "facilitador";
+    div.id = `sede${sede}_facilitador_${numero}`;
+
+    div.innerHTML = `
+      <h4>Facilitador ${numero}</h4>
+
+      <label>Nombre completo</label>
+      <input type="text" id="sede${sede}_fac${numero}_nombre" required>
+
+      <label>Cédula</label>
+      <input type="text" id="sede${sede}_fac${numero}_cedula" required placeholder="000-0000000-0">
+
+      <label>Teléfono</label>
+      <input type="tel" id="sede${sede}_fac${numero}_telefono" required>
+
+      <label>Centro educativo donde labora</label>
+      <input type="text" id="sede${sede}_fac${numero}_centro_labora" required>
+
+      <button type="button" class="btn-eliminar" onclick="eliminarFacilitador(${sede}, ${numero})">
+        Eliminar facilitador
+      </button>
+    `;
+
+    contenedor.appendChild(div);
+  }
+
+  function eliminarFacilitador(sede, numero) {
+    const elemento = document.getElementById(`sede${sede}_facilitador_${numero}`);
+    if (elemento) elemento.remove();
+  }
+
+  function mostrarSedeAdicional() {
+    document.getElementById("sedeAdicional").classList.remove("oculto");
+    document.getElementById("btnAgregarSede").classList.add("oculto");
+
+    const campos = document.querySelectorAll("#sedeAdicional input, #sedeAdicional select");
+    campos.forEach(campo => {
+      if (!campo.readOnly && campo.type !== "hidden") campo.required = true;
+    });
+
+    if (regionalSelect.value && distritoSelect.value) {
+      sede2CentroSelect.disabled = false;
+    }
+  }
+
+  function ocultarSedeAdicional() {
+    document.getElementById("sedeAdicional").classList.add("oculto");
+    document.getElementById("btnAgregarSede").classList.remove("oculto");
+
+    const campos = document.querySelectorAll("#sedeAdicional input, #sedeAdicional select");
+    campos.forEach(campo => {
+      campo.required = false;
+      campo.value = "";
+    });
+
+    document.getElementById("facilitadores_sede2").innerHTML = "";
+    contadorFacilitadores[2] = 0;
+  }
+
+  document.getElementById("formulario").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const mensaje = document.getElementById("mensaje");
+    mensaje.className = "mensaje";
+    mensaje.textContent = "";
+
+    const facilitadoresSede1 = obtenerFacilitadores(1);
+
+    if (facilitadoresSede1.length === 0) {
+      mostrarMensaje("Debe registrar al menos un facilitador para la sede principal.", "error");
+      return;
+    }
+
+    const sedes = [];
+
+    sedes.push(construirSede(1, "Principal", facilitadoresSede1));
+
+    const sedeAdicionalVisible = !document.getElementById("sedeAdicional").classList.contains("oculto");
+
+    if (sedeAdicionalVisible) {
+      const facilitadoresSede2 = obtenerFacilitadores(2);
+
+      if (facilitadoresSede2.length === 0) {
+        mostrarMensaje("Debe registrar al menos un facilitador para la sede adicional.", "error");
+        return;
+      }
+
+      if (document.getElementById("sede1CodigoCentro").value === document.getElementById("sede2CodigoCentro").value) {
+        mostrarMensaje("La sede adicional no puede ser el mismo centro que la sede principal.", "error");
+        return;
+      }
+
+      sedes.push(construirSede(2, "Adicional", facilitadoresSede2));
+    }
+
+    const payload = {
+      regional: regionalSelect.value,
+      distrito: distritoSelect.value,
+      responsableRegistro: document.getElementById("responsableRegistro").value.trim(),
+      telefonoContacto: document.getElementById("telefonoContacto").value.trim(),
+      correoContacto: document.getElementById("correoContacto").value.trim(),
+      sedes: sedes
+    };
+
+    const btnEnviar = document.getElementById("btnEnviar");
+    btnEnviar.disabled = true;
+    btnEnviar.textContent = "Enviando...";
+
+    google.script.run
+      .withSuccessHandler(function(respuesta) {
+        mostrarMensaje(respuesta.mensaje || "Información registrada correctamente.", "ok");
+        document.getElementById("formulario").reset();
+        distritoSelect.disabled = true;
+        limpiarCentros(1);
+        limpiarCentros(2);
+        document.getElementById("facilitadores_sede1").innerHTML = "";
+        document.getElementById("facilitadores_sede2").innerHTML = "";
+        contadorFacilitadores[1] = 0;
+        contadorFacilitadores[2] = 0;
+        ocultarSedeAdicional();
+
+        btnEnviar.disabled = false;
+        btnEnviar.textContent = "Enviar información";
+      })
+      .withFailureHandler(function(error) {
+        mostrarMensaje("Error al guardar la información: " + error.message, "error");
+        btnEnviar.disabled = false;
+        btnEnviar.textContent = "Enviar información";
+      })
+      .guardarRegistro(payload);
+  });
+
+  function construirSede(sede, tipoSede, facilitadores) {
+    return {
+      tipoSede: tipoSede,
+      codigoCentro: document.getElementById(`sede${sede}CodigoCentro`).value,
+      centroSede: document.getElementById(`sede${sede}CentroNombre`).value,
+      sector: document.getElementById(`sede${sede}Sector`).value,
+      cantidadEstudiantes: document.getElementById(`sede${sede}Estudiantes`).value,
+      cantidadGrupos: document.getElementById(`sede${sede}Grupos`).value,
+      observaciones: document.getElementById("observaciones").value.trim(),
+      coordinador: {
+        nombre: document.getElementById(`sede${sede}CoordNombre`).value.trim(),
+        cedula: document.getElementById(`sede${sede}CoordCedula`).value.trim(),
+        telefono: document.getElementById(`sede${sede}CoordTelefono`).value.trim()
+      },
+      facilitadores: facilitadores
+    };
+  }
+
+  function obtenerFacilitadores(sede) {
+    const facilitadores = [];
+    const contenedor = document.getElementById(`facilitadores_sede${sede}`);
+    const bloques = contenedor.querySelectorAll(".facilitador");
+
+    bloques.forEach(bloque => {
+      const inputs = bloque.querySelectorAll("input");
+
+      facilitadores.push({
+        nombre: inputs[0].value.trim(),
+        cedula: inputs[1].value.trim(),
+        telefono: inputs[2].value.trim(),
+        centroLabora: inputs[3].value.trim()
+      });
+    });
+
+    return facilitadores;
+  }
+
+  function mostrarMensaje(texto, tipo) {
+    const mensaje = document.getElementById("mensaje");
+    mensaje.textContent = texto;
+    mensaje.className = "mensaje " + tipo;
+    mensaje.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+</script>
+
+</body>
+</html>
